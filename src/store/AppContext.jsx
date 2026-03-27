@@ -14,12 +14,12 @@ export const AppProvider = ({ children }) => {
   // Filters
   const [filters, setFilters] = useState({
     era: [],
-    type: 'all',
-    availability: 'all',
-    priority: 'all',
-    cost: 'all',
-    solo: 'all',
-    damage: 'all',
+    type: [],
+    availability: [],
+    priority: [],
+    cost: [],
+    solo: [],
+    damage: [],
     searchQuery: ''
   });
 
@@ -82,19 +82,34 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  const updateFilter = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+  const updateFilter = (category, value) => {
+    if (category === 'searchQuery') {
+      setFilters(prev => ({ ...prev, searchQuery: value }));
+      return;
+    }
+
+    setFilters(prev => {
+      if (Array.isArray(value)) {
+        return { ...prev, [category]: value };
+      }
+      const currentList = prev[category] || [];
+      if (currentList.includes(value)) {
+        return { ...prev, [category]: currentList.filter(v => v !== value) };
+      } else {
+        return { ...prev, [category]: [...currentList, value] };
+      }
+    });
   };
 
   const resetFilters = () => {
     setFilters({
       era: [],
-      type: 'all',
-      availability: 'all',
-      priority: 'all',
-      cost: 'all',
-      solo: 'all',
-      damage: 'all',
+      type: [],
+      availability: [],
+      priority: [],
+      cost: [],
+      solo: [],
+      damage: [],
       searchQuery: ''
     });
   };

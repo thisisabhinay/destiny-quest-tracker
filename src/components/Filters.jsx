@@ -79,10 +79,10 @@ export const Filters = () => {
   const { filters, updateFilter, resetFilters } = useAppContext();
   const [showFilters, setShowFilters] = useState(false);
   
-  // Calculate active filters (excluding 'all' or empty arrays)
+  // Calculate active filters (excluding 'searchQuery' or empty arrays)
   const activeCount = Object.entries(filters).reduce((acc, [key, val]) => {
-    if (key === 'era') return acc + (val.length > 0 ? 1 : 0);
-    return acc + (val !== 'all' ? 1 : 0);
+    if (key === 'searchQuery') return acc;
+    return acc + (val.length > 0 ? 1 : 0);
   }, 0);
 
   return (
@@ -165,9 +165,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Type</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.type === 'all'} onClick={() => updateFilter('type', 'all')}>All</FilterChip>
+                <FilterChip active={filters.type.length === 0} onClick={() => updateFilter('type', [])}>All</FilterChip>
                 {TYPES.map(t => (
-                  <FilterChip key={t.id} active={filters.type === t.id} onClick={() => updateFilter('type', t.id)}>
+                  <FilterChip key={t.id} active={filters.type.includes(t.id)} onClick={() => updateFilter('type', t.id)}>
                     {t.label}
                   </FilterChip>
                 ))}
@@ -178,9 +178,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Avail</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.availability === 'all'} onClick={() => updateFilter('availability', 'all')}>All</FilterChip>
+                <FilterChip active={filters.availability.length === 0} onClick={() => updateFilter('availability', [])}>All</FilterChip>
                 {AVAILABILITY.map(a => (
-                  <FilterChip key={a.id} active={filters.availability === a.id} color={a.color} onClick={() => updateFilter('availability', a.id)}>
+                  <FilterChip key={a.id} active={filters.availability.includes(a.id)} color={a.color} onClick={() => updateFilter('availability', a.id)}>
                     {a.label}
                   </FilterChip>
                 ))}
@@ -191,9 +191,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Priority</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.priority === 'all'} onClick={() => updateFilter('priority', 'all')}>All</FilterChip>
+                <FilterChip active={filters.priority.length === 0} onClick={() => updateFilter('priority', [])}>All</FilterChip>
                 {PRIORITY.map(p => (
-                  <FilterChip key={p.id} active={filters.priority === p.id} color={p.color} onClick={() => updateFilter('priority', p.id)}>
+                  <FilterChip key={p.id} active={filters.priority.includes(p.id)} color={p.color} onClick={() => updateFilter('priority', p.id)}>
                     {p.label}
                   </FilterChip>
                 ))}
@@ -204,9 +204,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Cost</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.cost === 'all'} onClick={() => updateFilter('cost', 'all')}>All</FilterChip>
+                <FilterChip active={filters.cost.length === 0} onClick={() => updateFilter('cost', [])}>All</FilterChip>
                 {COST.map(c => (
-                  <FilterChip key={c.id} active={filters.cost === c.id} color={c.color} onClick={() => updateFilter('cost', c.id)}>
+                  <FilterChip key={c.id} active={filters.cost.includes(c.id)} color={c.color} onClick={() => updateFilter('cost', c.id)}>
                     {c.label}
                   </FilterChip>
                 ))}
@@ -217,9 +217,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Fireteam</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.solo === 'all'} onClick={() => updateFilter('solo', 'all')}>All</FilterChip>
+                <FilterChip active={filters.solo.length === 0} onClick={() => updateFilter('solo', [])}>All</FilterChip>
                 {FIRETEAM.map(f => (
-                  <FilterChip key={f.id} active={filters.solo === f.id} color={f.color} onClick={() => updateFilter('solo', f.id)}>
+                  <FilterChip key={f.id} active={filters.solo.includes(f.id)} color={f.color} onClick={() => updateFilter('solo', f.id)}>
                     {f.label}
                   </FilterChip>
                 ))}
@@ -230,9 +230,9 @@ export const Filters = () => {
             <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               <span className="text-[9px] text-white/40 uppercase tracking-widest w-16 flex-shrink-0 font-bold">Damage</span>
               <div className="flex gap-1 flex-nowrap">
-                <FilterChip active={filters.damage === 'all'} onClick={() => updateFilter('damage', 'all')}>All</FilterChip>
+                <FilterChip active={filters.damage.length === 0} onClick={() => updateFilter('damage', [])}>All</FilterChip>
                 {DAMAGE.map(d => (
-                  <FilterChip key={d.id} active={filters.damage === d.id} onClick={() => updateFilter('damage', d.id)}>
+                  <FilterChip key={d.id} active={filters.damage.includes(d.id)} onClick={() => updateFilter('damage', d.id)}>
                     {d.label}
                   </FilterChip>
                 ))}
