@@ -41,7 +41,7 @@ const MainApp = () => {
       style={{ backgroundImage: currentBg ? `url('${currentBg}')` : 'none', backgroundColor: '#0f0f11' }}
     >
       {/* Intense dark glassmorphism overlay */}
-      <div className="absolute inset-0 bg-[#0f0f11]/80 backdrop-blur-[8px] z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f11]/60 to-[#0f0f11]/95 backdrop-blur-[8px] z-0 pointer-events-none" />
       
       <header className="flex-shrink-0 z-50 relative bg-black/40 border-b border-white/10">
         <div className="px-6 py-5 pb-3 border-b border-white/5">

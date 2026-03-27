@@ -58,12 +58,12 @@ export const ContentCard = ({ item }) => {
         <div 
           className={cn(
             "group relative overflow-hidden transition-all duration-150 cursor-pointer flex flex-col text-left",
-            "border border-white/5 bg-[#1c1c1e]/90 backdrop-blur-sm rounded-sm shadow-sm",
+            "border border-white/10 bg-black/40 backdrop-blur-md rounded-sm shadow-lg",
             isCompleted 
-              ? "opacity-60 grayscale hover:opacity-80" 
+              ? "opacity-60 grayscale hover:opacity-80 hover:bg-black/50" 
               : isVaulted 
-                ? "opacity-40 grayscale-[0.8] border-dashed border-white/10 bg-[#111111] hover:opacity-60" 
-                : "hover:border-white/20 hover:bg-[#252528] hover:shadow-md"
+                ? "opacity-40 grayscale-[0.8] border-dashed border-white/10 bg-black/20 hover:opacity-60 hover:bg-black/40" 
+                : "hover:border-white/20 hover:bg-black/60 hover:shadow-xl"
           )}
         >
           {/* Accent Line matching Destiny Rarity Colors */}
@@ -124,7 +124,7 @@ export const ContentCard = ({ item }) => {
               </div>
               
               {item.description && (
-                 <p className="text-[11px] leading-snug text-white/50 line-clamp-2 mt-1 font-light italic">
+                 <p className="text-[11px] leading-snug text-white/50 mt-1.5 font-light italic break-words whitespace-normal">
                    "{item.description}"
                  </p>
               )}
