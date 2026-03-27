@@ -18,6 +18,8 @@ export const AppProvider = ({ children }) => {
     availability: 'all',
     priority: 'all',
     cost: 'all',
+    solo: 'all',
+    damage: 'all',
   });
 
   useEffect(() => {
@@ -90,6 +92,8 @@ export const AppProvider = ({ children }) => {
       availability: 'all',
       priority: 'all',
       cost: 'all',
+      solo: 'all',
+      damage: 'all',
     });
   };
 

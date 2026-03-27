@@ -24,22 +24,44 @@ export const SeasonColumn = ({ season }) => {
       });
     }
 
-    // Apply Filters
+      // Apply Filters
     return allItems.filter(item => {
+      // Type
       if (filters.type !== 'all' && item.itemCategory !== filters.type) return false;
       
-      const isVaulted = item.vaulted === true || item.status === 'vaulted';
-      const isKiosk = item.kioskAvailable === true;
-      if (filters.availability === 'available' && isVaulted) return false;
-      if (filters.availability === 'vaulted' && !isVaulted) return false;
+      // Availability
+      const isVaulted = item.vaulted === true || item.status === 'vaulted' || item.availability === 'vaulted';
+      const isKiosk = item.kioskAvailable === true || item.availability === 'kiosk';
+      const isRotator = item.availability === 'rotator';
+      const isFree = item.isFree === true || item.cost === 'free';
+      const isAvailable = item.availability === 'available' || (!isVaulted && !isKiosk && !isRotator);
+
+      if (filters.availability === 'free' && !isFree) return false;
+      if (filters.availability === 'available' && !isAvailable) return false;
       if (filters.availability === 'kiosk' && !isKiosk) return false;
+      if (filters.availability === 'rotator' && !isRotator) return false;
+      if (filters.availability === 'vaulted' && !isVaulted) return false;
       
+      // Priority
       if (filters.priority !== 'all' && String(item.priority) !== String(filters.priority)) return false;
+
+      // Cost
+      if (filters.cost === 'free' && !isFree) return false;
+      if (filters.cost === 'expansion' && item.cost !== 'expansion') return false;
+      if (filters.cost === 'dungeonKey' && item.cost !== 'dungeonKey') return false;
+      if (filters.cost === 'kiosk' && !isKiosk && item.cost !== 'kiosk') return false;
+
+      // Fireteam
+      if (filters.solo === 'solo' && item.solo !== true) return false;
+      if (filters.solo === 'team' && item.solo !== false && item.solo !== undefined) return false;
+
+      // Damage
+      if (filters.damage !== 'all' && item.damageType !== filters.damage) return false;
 
       return true;
     });
 
-  }, [season, filters.type, filters.availability, filters.priority]);
+  }, [season, filters]);
 
   if (items.length === 0) return null;
 
