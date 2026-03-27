@@ -24,7 +24,8 @@ export const KanbanBoard = () => {
       // Filter logic applied to content inside the season
       // We will pass the full season to Swimlane, and Swimlane/Column will filter items
       // But we can skip year if filter era doesn't match
-      if (filters.era !== 'all' && filters.era !== String(year)) {
+      // era filter now an array of strings
+      if (filters.era.length > 0 && !filters.era.includes(String(year))) {
         return acc;
       }
       
@@ -32,7 +33,9 @@ export const KanbanBoard = () => {
       return acc;
     }, {});
 
-    return Object.values(grouped).sort((a, b) => a.year - b.year);
+    return Object.values(grouped)
+      .sort((a, b) => a.year - b.year)
+      .filter(lane => lane.seasons && lane.seasons.length > 0);
   }, [data, filters.era]);
 
   if (swimlanes.length === 0) {

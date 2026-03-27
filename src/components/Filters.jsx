@@ -59,12 +59,31 @@ export const Filters = () => {
         <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
           <span className="text-[10px] text-white/30 uppercase tracking-widest w-16 flex-shrink-0">Year</span>
           <div className="flex gap-1 flex-nowrap">
-            <FilterChip active={filters.era === 'all'} onClick={() => updateFilter('era', 'all')}>All</FilterChip>
-            {ERAS.map(e => (
-              <FilterChip key={e.id} active={filters.era === e.id} color={e.color} onClick={() => updateFilter('era', e.id)}>
-                {e.name}
-              </FilterChip>
-            ))}
+            <FilterChip 
+              active={filters.era.length === 0} 
+              onClick={() => updateFilter('era', [])}
+            >
+              All
+            </FilterChip>
+            {ERAS.map(e => {
+              const isActive = filters.era.includes(e.id);
+              const toggleEra = () => {
+                const newEras = isActive 
+                  ? filters.era.filter(id => id !== e.id)
+                  : [...filters.era, e.id];
+                updateFilter('era', newEras);
+              };
+              return (
+                <FilterChip 
+                  key={e.id} 
+                  active={isActive} 
+                  color={e.color} 
+                  onClick={toggleEra}
+                >
+                  {e.name}
+                </FilterChip>
+              );
+            })}
           </div>
         </div>
 

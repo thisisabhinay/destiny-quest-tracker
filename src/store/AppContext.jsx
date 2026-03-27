@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fetchAndCacheData, getUserState, saveUserState } from '../services/db';
 
 const AppContext = createContext();
@@ -13,7 +13,7 @@ export const AppProvider = ({ children }) => {
   
   // Filters
   const [filters, setFilters] = useState({
-    era: 'all',
+    era: [],
     type: 'all',
     availability: 'all',
     priority: 'all',
@@ -85,7 +85,7 @@ export const AppProvider = ({ children }) => {
 
   const resetFilters = () => {
     setFilters({
-      era: 'all',
+      era: [],
       type: 'all',
       availability: 'all',
       priority: 'all',
