@@ -34,6 +34,19 @@ export const ContentCard = ({ item }) => {
   const meta = CATEGORY_META[item.itemCategory] || CATEGORY_META.exoticWeapon;
   const Icon = meta.icon;
 
+  const categoryLabels = {
+    campaign: 'Campaign',
+    raid: 'Raid',
+    dungeon: 'Dungeon',
+    exoticMission: 'Exotic Mission',
+    exoticWeapon: 'Exotic Weapon',
+    exoticArmor: 'Exotic Armor',
+    strike: 'Strike',
+    seal: 'Seal'
+  };
+  
+  const typeLabel = categoryLabels[item.itemCategory] || item.itemCategory;
+
   const handleCheckboxClick = (e) => {
     e.stopPropagation();
     toggleCompletion(itemId);
@@ -86,6 +99,14 @@ export const ContentCard = ({ item }) => {
               </div>
               
               <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                {typeLabel && (
+                  <Badge 
+                    className="rounded-[2px] px-1 py-0 h-[14px] text-[8px] uppercase tracking-widest border"
+                    style={{ backgroundColor: `${meta.color}20`, color: meta.color, borderColor: `${meta.color}50` }}
+                  >
+                    {typeLabel}
+                  </Badge>
+                )}
                 {isVaulted && (
                    <Badge className="rounded-[2px] px-1 py-0 h-[14px] text-[8px] bg-red-900/40 text-red-300 hover:bg-red-900/40 uppercase tracking-widest border-red-900">Vaulted</Badge>
                 )}

@@ -32,7 +32,7 @@ export const getFilteredSeasonItems = (season, filters) => {
 
     const isKiosk = item.kioskAvailable === true || item.availability === 'kiosk';
     const isRotator = item.availability === 'rotator';
-    const isFree = item.isFree === true || item.cost === 'free';
+    const isFree = item.free === true || item.cost === 'free' || item.requires === 'FREE';
     const isAvailable = item.availability === 'available' || (!isVaulted && !isKiosk && !isRotator);
 
     if (filters.availability.length > 0) {
