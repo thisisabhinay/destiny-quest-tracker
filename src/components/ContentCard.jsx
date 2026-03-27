@@ -133,19 +133,37 @@ export const ContentCard = ({ item }) => {
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4 pt-4 text-sm text-white/80">
+        <div className="space-y-4 pt-4 text-sm text-white/80 overflow-y-auto pr-2 pb-2 custom-scrollbar">
           {item.description && (
-            <p className="italic text-white/60 text-xs">"{item.description}"</p>
+            <p className="italic text-white/60 text-xs border-l-2 pl-3 border-white/20">"{item.description}"</p>
+          )}
+
+          {/* ACQUISITION / HOW TO OBTAIN */}
+          {(item.source || item.catalystSource) && (
+            <div className="bg-[#18181a] p-3 rounded-sm border border-white/10 space-y-3">
+              <h4 className="text-[10px] text-white/50 uppercase tracking-widest font-bold flex items-center gap-2">
+                <Target size={12} className="text-[#35e082]" /> How to Obtain
+              </h4>
+              <div className="space-y-2">
+                {item.source && (
+                  <div>
+                    <span className="text-white/40 text-[10px] uppercase block mb-0.5">Primary Source</span>
+                    <span className="text-white font-medium text-xs text-[#cecece]">{item.source}</span>
+                  </div>
+                )}
+                {item.hasCatalyst && item.catalystSource && (
+                  <div>
+                    <span className="text-[#a855f7]/60 text-[10px] uppercase block mb-0.5 mt-2">Catalyst Prerequisite / Source</span>
+                    <span className="text-[#a855f7] font-medium text-xs">{item.catalystSource}</span>
+                  </div>
+                )}
+              </div>
+            </div>
           )}
           
-          {(item.source || item.reward || item.exoticDrop || item.kioskCost || (item.encounters && item.encounters.length > 0)) && (
+          {/* BASE STATS & DROPS */}
+          {(item.reward || item.exoticDrop || item.kioskCost || (item.encounters && item.encounters.length > 0)) && (
             <div className="grid grid-cols-2 gap-y-3 gap-x-4 bg-white/5 p-4 rounded-sm border border-white/5">
-              {item.source && (
-                <div className="col-span-2">
-                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Source</span>
-                  <span className="text-white font-medium text-xs">{item.source}</span>
-                </div>
-              )}
               
               {item.reward && (
                 <div className="col-span-2">
@@ -163,17 +181,20 @@ export const ContentCard = ({ item }) => {
               
               {item.kioskCost && (
                 <div className="col-span-2 md:col-span-1">
-                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Kiosk Cost</span>
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Monument Cost</span>
                   <span className="text-orange-400 font-medium text-xs">{item.kioskCost}</span>
                 </div>
               )}
               
               {item.encounters && item.encounters.length > 0 && (
-                <div className="col-span-2 pt-2 border-t border-white/5 mt-1">
-                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-2">Encounters</span>
-                  <div className="flex flex-wrap gap-2 text-[10px]">
+                <div className="col-span-2 pt-2 border-t border-white/5 mt-2">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-2">Encounters Order</span>
+                  <div className="flex flex-wrap items-center gap-1.5 text-[10px]">
                     {item.encounters.map((enc, i) => (
-                      <span key={i} className="bg-white/10 px-2 py-1 rounded-sm text-white/80">{enc}</span>
+                      <div key={i} className="flex items-center gap-1.5">
+                        <span className="bg-white/10 px-2.5 py-1.5 rounded-sm text-white/90 border border-white/5 font-medium">{enc}</span>
+                        {i < item.encounters.length - 1 && <span className="text-white/30 text-xs">→</span>}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -188,11 +209,39 @@ export const ContentCard = ({ item }) => {
             </div>
           )}
           
-          <div className="flex flex-wrap gap-2 mt-4">
+          <div className="flex flex-wrap gap-2 mt-4 pb-2">
             {item.hasCatalyst && <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Catalyst Available</Badge>}
             {item.craftable && <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Craftable</Badge>}
             {item.soloFlawless && <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Solo Flawless</Badge>}
             {item.seal && <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">{item.seal} Seal</Badge>}
+          </div>
+
+          {/* DIVE DEEPER: EXTERNAL GUIDES */}
+          <div className="border-t border-white/10 pt-4 mt-4 space-y-3 pb-2">
+             <h4 className="text-[10px] text-white/50 uppercase tracking-widest font-bold">Dive Deeper (Internet Guides)</h4>
+             <div className="flex flex-col gap-2">
+               {item.watchRecap && (
+                 <a href={item.watchRecap} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-2.5 rounded bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-300 text-xs font-semibold transition-colors">
+                   <BookOpen size={14} className="text-red-400" /> Watch Story/Lore Recap
+                 </a>
+               )}
+               <a 
+                 href={`https://www.youtube.com/results?search_query=Destiny+2+${encodeURIComponent(item.name)}+guide`} 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="flex items-center gap-2 p-2.5 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-xs font-semibold transition-colors"
+               >
+                 <Target size={14} className="text-red-400" /> Search YouTube Guide for {item.name}
+               </a>
+               <a 
+                 href={`https://www.light.gg/db/search/?q=${encodeURIComponent(item.name)}`} 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="flex items-center gap-2 p-2.5 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 text-xs font-semibold transition-colors"
+               >
+                 <BookOpen size={14} className="text-blue-400" /> View {item.name} Database on Light.gg
+               </a>
+             </div>
           </div>
         </div>
       </DialogContent>
