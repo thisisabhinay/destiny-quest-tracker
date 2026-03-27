@@ -1,9 +1,8 @@
-import React from 'react';
-import { useAppContext } from '../store/AppContext';
-import { Checkbox } from './ui/checkbox';
-import { Badge } from './ui/badge';
-import { BookOpen, Crown, Skull, Star, Target, Shield, Zap, Users, User, AlertCircle, Award } from 'lucide-react';
+import { AlertCircle, Award, BookOpen, Crown, Shield, Skull, Star, Target, User, Users, Zap } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useAppContext } from '../store/AppContext';
+import { Badge } from './ui/badge';
+import { Checkbox } from './ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -30,7 +29,7 @@ export const ContentCard = ({ item }) => {
   const itemId = item.id || item.name;
   const isCompleted = completedItems.has(itemId);
   
-  const isVaulted = item.vaulted === true || item.status === 'vaulted';
+  const isVaulted = item.vaulted === true || item.status === 'vaulted' || item.availability === 'vaulted';
   
   const meta = CATEGORY_META[item.itemCategory] || CATEGORY_META.exoticWeapon;
   const Icon = meta.icon;
@@ -47,8 +46,11 @@ export const ContentCard = ({ item }) => {
           className={cn(
             "group relative overflow-hidden transition-all duration-150 cursor-pointer flex flex-col text-left",
             "border border-white/5 bg-[#1c1c1e]/90 backdrop-blur-sm rounded-sm shadow-sm",
-            isCompleted ? "opacity-50 grayscale hover:opacity-80" : "hover:border-white/20 hover:bg-[#252528] hover:shadow-md",
-            isVaulted && !isCompleted ? "opacity-75" : ""
+            isCompleted 
+              ? "opacity-60 grayscale hover:opacity-80" 
+              : isVaulted 
+                ? "opacity-40 grayscale-[0.8] border-dashed border-white/10 bg-[#111111] hover:opacity-60" 
+                : "hover:border-white/20 hover:bg-[#252528] hover:shadow-md"
           )}
         >
           {/* Accent Line matching Destiny Rarity Colors */}
@@ -132,48 +134,52 @@ export const ContentCard = ({ item }) => {
         </DialogHeader>
         
         <div className="space-y-4 pt-4 text-sm text-white/80">
-          <p className="italic text-white/60 text-xs">"{item.description}"</p>
+          {item.description && (
+            <p className="italic text-white/60 text-xs">"{item.description}"</p>
+          )}
           
-          <div className="grid grid-cols-2 gap-y-3 gap-x-4 bg-white/5 p-4 rounded-sm border border-white/5">
-            {item.source && (
-              <div className="col-span-2">
-                <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Source</span>
-                <span className="text-white font-medium text-xs">{item.source}</span>
-              </div>
-            )}
-            
-            {item.reward && (
-              <div className="col-span-2">
-                <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Reward</span>
-                <span className="text-[#35e082] font-semibold text-xs">{item.reward}</span>
-              </div>
-            )}
-
-            {item.exoticDrop && (
-              <div className="col-span-2 md:col-span-1">
-                <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Exotic Drop</span>
-                <span className="text-[#ceae33] font-semibold text-xs">{item.exoticDrop}</span>
-              </div>
-            )}
-            
-            {item.kioskCost && (
-              <div className="col-span-2 md:col-span-1">
-                <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Kiosk Cost</span>
-                <span className="text-orange-400 font-medium text-xs">{item.kioskCost}</span>
-              </div>
-            )}
-            
-            {item.encounters && item.encounters.length > 0 && (
-              <div className="col-span-2 pt-2 border-t border-white/5 mt-1">
-                <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-2">Encounters</span>
-                <div className="flex flex-wrap gap-2 text-[10px]">
-                  {item.encounters.map((enc, i) => (
-                    <span key={i} className="bg-white/10 px-2 py-1 rounded-sm text-white/80">{enc}</span>
-                  ))}
+          {(item.source || item.reward || item.exoticDrop || item.kioskCost || (item.encounters && item.encounters.length > 0)) && (
+            <div className="grid grid-cols-2 gap-y-3 gap-x-4 bg-white/5 p-4 rounded-sm border border-white/5">
+              {item.source && (
+                <div className="col-span-2">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Source</span>
+                  <span className="text-white font-medium text-xs">{item.source}</span>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+              
+              {item.reward && (
+                <div className="col-span-2">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Reward</span>
+                  <span className="text-[#35e082] font-semibold text-xs">{item.reward}</span>
+                </div>
+              )}
+
+              {item.exoticDrop && (
+                <div className="col-span-2 md:col-span-1">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Exotic Drop</span>
+                  <span className="text-[#ceae33] font-semibold text-xs">{item.exoticDrop}</span>
+                </div>
+              )}
+              
+              {item.kioskCost && (
+                <div className="col-span-2 md:col-span-1">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Kiosk Cost</span>
+                  <span className="text-orange-400 font-medium text-xs">{item.kioskCost}</span>
+                </div>
+              )}
+              
+              {item.encounters && item.encounters.length > 0 && (
+                <div className="col-span-2 pt-2 border-t border-white/5 mt-1">
+                  <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-2">Encounters</span>
+                  <div className="flex flex-wrap gap-2 text-[10px]">
+                    {item.encounters.map((enc, i) => (
+                      <span key={i} className="bg-white/10 px-2 py-1 rounded-sm text-white/80">{enc}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {item.note && (
             <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-sm flex gap-3 items-start">
