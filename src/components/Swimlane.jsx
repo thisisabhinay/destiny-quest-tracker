@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SeasonColumn } from './SeasonColumn';
+import { useAppContext } from '../store/AppContext';
+import { getFilteredSeasonItems } from '../lib/filterLogic';
 
 export const Swimlane = ({ lane }) => {
+  const { filters } = useAppContext();
+
+  const hasVisibleItems = useMemo(() => {
+    return lane.seasons.some(season => getFilteredSeasonItems(season, filters).length > 0);
+  }, [lane.seasons, filters]);
+
+  if (!hasVisibleItems) return null;
+
   return (
     <div className="flex flex-col flex-shrink-0 animate-in fade-in duration-500">
       {/* Sticky flat header matching Destiny 2 geometric, minimal style */}

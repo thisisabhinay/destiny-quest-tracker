@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useAppContext } from '../store/AppContext';
 import { Swimlane } from './Swimlane';
 import { ScrollArea, ScrollBar } from './ui/scroll-area';
+import { getFilteredSeasonItems } from '../lib/filterLogic';
 
 export const KanbanBoard = () => {
   const { data, filters } = useAppContext();
@@ -38,10 +39,17 @@ export const KanbanBoard = () => {
       .filter(lane => lane.seasons && lane.seasons.length > 0);
   }, [data, filters.era]);
 
-  if (swimlanes.length === 0) {
+  const visibleSwimlanes = useMemo(() => {
+    return swimlanes.filter(lane => 
+      lane.seasons.some(season => getFilteredSeasonItems(season, filters).length > 0)
+    );
+  }, [swimlanes, filters]);
+
+  if (visibleSwimlanes.length === 0) {
     return (
-      <div className="h-full flex items-center justify-center p-8 text-muted-foreground">
-        No content matches the selected filters.
+      <div className="h-[calc(100vh-140px)] flex flex-col items-center justify-center p-8 text-white/50 space-y-4">
+        <p className="text-xl font-bold tracking-widest uppercase">No Records Found</p>
+        <p className="text-sm">Try adjusting your active filters or clear your search query.</p>
       </div>
     );
   }
@@ -49,7 +57,7 @@ export const KanbanBoard = () => {
   return (
     <ScrollArea className="h-[calc(100vh-140px)] w-full whitespace-nowrap rounded-md border-0">
       <div className="flex w-max space-x-6 p-6">
-        {swimlanes.map((lane) => (
+        {visibleSwimlanes.map((lane) => (
           <Swimlane key={lane.year} lane={lane} />
         ))}
       </div>
