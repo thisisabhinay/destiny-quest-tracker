@@ -20,6 +20,7 @@ export const AppProvider = ({ children }) => {
     cost: 'all',
     solo: 'all',
     damage: 'all',
+    searchQuery: ''
   });
 
   useEffect(() => {
@@ -94,6 +95,7 @@ export const AppProvider = ({ children }) => {
       cost: 'all',
       solo: 'all',
       damage: 'all',
+      searchQuery: ''
     });
   };
 

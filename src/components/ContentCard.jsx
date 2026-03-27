@@ -175,7 +175,9 @@ export const ContentCard = ({ item }) => {
               {item.exoticDrop && (
                 <div className="col-span-2 md:col-span-1">
                   <span className="text-[10px] text-white/40 uppercase tracking-widest block mb-1">Exotic Drop</span>
-                  <span className="text-[#ceae33] font-semibold text-xs">{item.exoticDrop}</span>
+                  <span className="text-[#ceae33] font-semibold text-xs">
+                    {typeof item.exoticDrop === 'string' ? item.exoticDrop : item.exoticDrop.name}
+                  </span>
                 </div>
               )}
               
@@ -213,7 +215,11 @@ export const ContentCard = ({ item }) => {
             {item.hasCatalyst && <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Catalyst Available</Badge>}
             {item.craftable && <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Craftable</Badge>}
             {item.soloFlawless && <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">Solo Flawless</Badge>}
-            {item.seal && <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">{item.seal} Seal</Badge>}
+            {item.seal && (
+              <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30 text-[10px] rounded-sm uppercase tracking-widest py-0.5">
+                {typeof item.seal === 'string' ? item.seal : item.seal.title || item.seal.name} Seal
+              </Badge>
+            )}
           </div>
 
           {/* DIVE DEEPER: EXTERNAL GUIDES */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../store/AppContext';
-import { Filter, X, Zap, Target, BookOpen } from 'lucide-react';
+import { Filter, X, Zap, Target, BookOpen, Search } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
 
@@ -87,24 +87,44 @@ export const Filters = () => {
 
   return (
     <div className="w-full flex flex-col gap-2">
-      <div className="flex items-center gap-4 border-b border-white/10 pb-2">
+      <div className="flex items-center justify-between border-b border-white/10 pb-2">
         <Button 
           variant="outline" 
           size="sm" 
           onClick={() => setShowFilters(!showFilters)}
           className={cn(
-            "h-8 border-white/20 hover:bg-white/10 hover:text-white transition-all bg-[#111111]/80 backdrop-blur-sm rounded-sm text-xs",
+            "h-9 border-white/20 hover:bg-white/10 hover:text-white transition-all bg-[#111111]/80 backdrop-blur-sm rounded-sm text-xs font-bold tracking-widest px-4",
             (showFilters || activeCount > 0) && "border-[#cecece]/50 text-white"
           )}
         >
           <Filter className="h-4 w-4 mr-2" />
           FILTERS
           {activeCount > 0 && (
-            <span className="ml-2 flex h-4 w-4 items-center justify-center rounded-sm bg-white/20 text-[10px] text-white font-bold">
+            <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-sm bg-white/20 text-[10px] text-white font-bold">
               {activeCount}
             </span>
           )}
         </Button>
+
+        <div className="relative isolate group flex items-center">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/40 group-focus-within:text-white transition-colors pointer-events-none z-10" />
+          <input 
+            type="text" 
+            placeholder="SEARCH TITLE..." 
+            value={filters.searchQuery || ''}
+            onChange={(e) => updateFilter('searchQuery', e.target.value)}
+            className="h-9 w-48 md:w-64 bg-[#111111]/80 backdrop-blur-sm border border-white/20 hover:border-white/40 rounded-sm text-xs text-white placeholder:text-white/30 placeholder:tracking-widest placeholder:font-bold pl-9 pr-8 focus:outline-none focus:border-[#cecece]/50 transition-all font-medium"
+          />
+          {filters.searchQuery && (
+            <button 
+              onClick={() => updateFilter('searchQuery', '')}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-white/40 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+              title="Clear search"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {showFilters && (

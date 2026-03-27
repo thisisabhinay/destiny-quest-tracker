@@ -27,6 +27,9 @@ export const SeasonColumn = ({ season }) => {
 
       // Apply Filters
     return allItems.filter(item => {
+      // Free Text Search
+      if (filters.searchQuery && !item.name.toLowerCase().includes(filters.searchQuery.toLowerCase())) return false;
+
       // Type
       if (filters.type !== 'all' && item.itemCategory !== filters.type) return false;
       
