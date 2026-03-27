@@ -23,7 +23,7 @@ export const getFilteredSeasonItems = (season, filters) => {
     if (filters.searchQuery && !item.name.toLowerCase().includes(filters.searchQuery.toLowerCase())) return false;
 
     // Type
-    if (filters.type !== 'all' && item.itemCategory !== filters.type) return false;
+    if (filters.type.length > 0 && !filters.type.includes(item.itemCategory)) return false;
     
     // Availability
     const isVaulted = item.vaulted === true || item.status === 'vaulted' || item.availability === 'vaulted';
@@ -32,27 +32,39 @@ export const getFilteredSeasonItems = (season, filters) => {
     const isFree = item.isFree === true || item.cost === 'free';
     const isAvailable = item.availability === 'available' || (!isVaulted && !isKiosk && !isRotator);
 
-    if (filters.availability === 'free' && !isFree) return false;
-    if (filters.availability === 'available' && !isAvailable) return false;
-    if (filters.availability === 'kiosk' && !isKiosk) return false;
-    if (filters.availability === 'rotator' && !isRotator) return false;
-    if (filters.availability === 'vaulted' && !isVaulted) return false;
+    if (filters.availability.length > 0) {
+      let match = false;
+      if (filters.availability.includes('free') && isFree) match = true;
+      if (filters.availability.includes('available') && isAvailable) match = true;
+      if (filters.availability.includes('kiosk') && isKiosk) match = true;
+      if (filters.availability.includes('rotator') && isRotator) match = true;
+      if (filters.availability.includes('vaulted') && isVaulted) match = true;
+      if (!match) return false;
+    }
     
     // Priority
-    if (filters.priority !== 'all' && String(item.priority) !== String(filters.priority)) return false;
+    if (filters.priority.length > 0 && !filters.priority.includes(String(item.priority))) return false;
 
     // Cost
-    if (filters.cost === 'free' && !isFree) return false;
-    if (filters.cost === 'expansion' && item.cost !== 'expansion') return false;
-    if (filters.cost === 'dungeonKey' && item.cost !== 'dungeonKey') return false;
-    if (filters.cost === 'kiosk' && !isKiosk && item.cost !== 'kiosk') return false;
+    if (filters.cost.length > 0) {
+      let match = false;
+      if (filters.cost.includes('free') && isFree) match = true;
+      if (filters.cost.includes('expansion') && item.cost === 'expansion') match = true;
+      if (filters.cost.includes('dungeonKey') && item.cost === 'dungeonKey') match = true;
+      if (filters.cost.includes('kiosk') && (isKiosk || item.cost === 'kiosk')) match = true;
+      if (!match) return false;
+    }
 
     // Fireteam
-    if (filters.solo === 'solo' && item.solo !== true) return false;
-    if (filters.solo === 'team' && item.solo !== false && item.solo !== undefined) return false;
+    if (filters.solo.length > 0) {
+      let match = false;
+      if (filters.solo.includes('solo') && item.solo === true) match = true;
+      if (filters.solo.includes('team') && (item.solo === false || item.solo === undefined)) match = true;
+      if (!match) return false;
+    }
 
     // Damage
-    if (filters.damage !== 'all' && item.damageType !== filters.damage) return false;
+    if (filters.damage.length > 0 && !filters.damage.includes(item.damageType?.toLowerCase())) return false;
 
     return true;
   });
