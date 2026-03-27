@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppContext } from '../store/AppContext';
 import { Checkbox } from './ui/checkbox';
 import { Badge } from './ui/badge';
-import { BookOpen, Crown, Skull, Star, Target, Shield, Zap, Users, User, AlertCircle } from 'lucide-react';
+import { BookOpen, Crown, Skull, Star, Target, Shield, Zap, Users, User, AlertCircle, Award } from 'lucide-react';
 import { cn } from '../lib/utils';
 import {
   Dialog,
@@ -20,7 +20,8 @@ const CATEGORY_META = {
   exoticMission: { icon: Star, color: "#facc15", bg: "bg-yellow-400/20" }, // Exotic
   exoticWeapon: { icon: Target, color: "#ceae33", bg: "bg-[#ceae33]/20" },  // Exotic Gold
   exoticArmor: { icon: Shield, color: "#ceae33", bg: "bg-[#ceae33]/20" },   // Exotic Gold
-  strike: { icon: Zap, color: "#3b82f6", bg: "bg-blue-500/20" }          // Rare
+  strike: { icon: Zap, color: "#3b82f6", bg: "bg-blue-500/20" },          // Rare
+  seal: { icon: Award, color: "#8b5cf6", bg: "bg-violet-500/20" }       // Violet for Titles
 };
 
 export const ContentCard = ({ item }) => {

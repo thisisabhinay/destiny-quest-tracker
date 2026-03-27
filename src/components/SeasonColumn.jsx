@@ -17,6 +17,7 @@ export const SeasonColumn = ({ season }) => {
     if (content.dungeons) allItems.push(...content.dungeons.map(i => ({ ...i, itemCategory: 'dungeon' })));
     if (content.exoticMissions) allItems.push(...content.exoticMissions.map(i => ({ ...i, itemCategory: 'exoticMission' })));
     if (content.strikes) allItems.push(...content.strikes.map(i => ({ ...i, itemCategory: 'strike' })));
+    if (content.seals) allItems.push(...content.seals.map(i => ({ ...i, itemCategory: 'seal' })));
     if (content.exotics?.weapons) allItems.push(...content.exotics.weapons.map(i => ({ ...i, itemCategory: 'exoticWeapon' })));
     if (content.exotics?.armor) {
       Object.keys(content.exotics.armor).forEach(cls => {

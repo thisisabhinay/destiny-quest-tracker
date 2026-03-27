@@ -22,7 +22,8 @@ const TYPES = [
   { id: 'exoticMission', label: 'Exotic Mission' },
   { id: 'exoticWeapon', label: 'Exotic Weapon' },
   { id: 'exoticArmor', label: 'Exotic Armor' },
-  { id: 'strike', label: 'Strike' }
+  { id: 'strike', label: 'Strike' },
+  { id: 'seal', label: 'Seal' }
 ];
 
 const AVAILABILITY = [
