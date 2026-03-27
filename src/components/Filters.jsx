@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { Filter, Search, X } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '../lib/utils';
 import { useAppContext } from '../store/AppContext';
-import { BookOpen, Filter, Search, Target, X, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { Checkbox } from './ui/checkbox';
-import { cn } from '../lib/utils';
 
 const ERAS = [
   { id: '1', name: 'Y1: Red War', color: '#c41230' },
@@ -88,7 +88,7 @@ export const Filters = () => {
 
   return (
     <div className="w-full flex flex-col gap-2">
-      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+      <div className="flex items-center justify-between pb-2">
         <div className="flex items-center gap-4">
           <Button 
             variant="outline" 

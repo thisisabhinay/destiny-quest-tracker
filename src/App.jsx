@@ -1,8 +1,8 @@
-import React from 'react';
-import { KanbanBoard } from './components/KanbanBoard';
-import { Filters } from './components/Filters';
-import { AppProvider, useAppContext } from './store/AppContext';
 import { Loader2 } from 'lucide-react';
+import React from 'react';
+import { Filters } from './components/Filters';
+import { KanbanBoard } from './components/KanbanBoard';
+import { AppProvider, useAppContext } from './store/AppContext';
 
 const bgModules = import.meta.glob('/public/backgrounds/*.{jpg,jpeg,png,webp,avif}', { eager: true });
 const bgList = Object.keys(bgModules).map(path => path.replace('/public', ''));
@@ -41,9 +41,9 @@ const MainApp = () => {
       style={{ backgroundImage: currentBg ? `url('${currentBg}')` : 'none', backgroundColor: '#0f0f11' }}
     >
       {/* Intense dark glassmorphism overlay */}
-      <div className="absolute inset-0 bg-[#0f0f11]/85 backdrop-blur-[10px] z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-[#0f0f11]/80 backdrop-blur-[8px] z-0 pointer-events-none" />
       
-      <header className="flex-shrink-0 z-50 relative bg-transparent">
+      <header className="flex-shrink-0 z-50 relative bg-black/40 border-b border-white/10">
         <div className="px-6 py-5 pb-3 border-b border-white/5">
           <div className="flex items-center justify-between mb-4">
             <div>
