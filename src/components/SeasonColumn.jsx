@@ -19,6 +19,7 @@ export const SeasonColumn = ({ season }) => {
       <div className="flex flex-col mb-1 ml-1">
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold tracking-widest text-[#cecece] uppercase opacity-70">Season {season.season}</span>
+          <span className="text-[9px] font-bold text-white/30 bg-white/5 border border-white/10 px-1 py-px rounded-sm">{items.length} ITEMS</span>
         </div>
         <h3 className="font-medium text-[15px] tracking-wide text-white/90 truncate">{season.metadata.name || season.metadata.seasonName}</h3>
       </div>
