@@ -27,6 +27,9 @@ export const getFilteredSeasonItems = (season, filters) => {
     
     // Availability
     const isVaulted = item.vaulted === true || item.status === 'vaulted' || item.availability === 'vaulted';
+
+    if (filters.hideVaulted && isVaulted) return false;
+
     const isKiosk = item.kioskAvailable === true || item.availability === 'kiosk';
     const isRotator = item.availability === 'rotator';
     const isFree = item.isFree === true || item.cost === 'free';

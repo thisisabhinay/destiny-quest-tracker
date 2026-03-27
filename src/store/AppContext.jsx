@@ -20,7 +20,8 @@ export const AppProvider = ({ children }) => {
     cost: [],
     solo: [],
     damage: [],
-    searchQuery: ''
+    searchQuery: '',
+    hideVaulted: false
   });
 
   useEffect(() => {
@@ -83,8 +84,8 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateFilter = (category, value) => {
-    if (category === 'searchQuery') {
-      setFilters(prev => ({ ...prev, searchQuery: value }));
+    if (category === 'searchQuery' || category === 'hideVaulted') {
+      setFilters(prev => ({ ...prev, [category]: value }));
       return;
     }
 
@@ -110,7 +111,8 @@ export const AppProvider = ({ children }) => {
       cost: [],
       solo: [],
       damage: [],
-      searchQuery: ''
+      searchQuery: '',
+      hideVaulted: false
     });
   };
 

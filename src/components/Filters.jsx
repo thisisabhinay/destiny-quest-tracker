@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../store/AppContext';
-import { Filter, X, Zap, Target, BookOpen, Search } from 'lucide-react';
+import { BookOpen, Filter, Search, Target, X, Zap } from 'lucide-react';
 import { Button } from './ui/button';
+import { Checkbox } from './ui/checkbox';
 import { cn } from '../lib/utils';
 
 const ERAS = [
@@ -88,23 +89,34 @@ export const Filters = () => {
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={() => setShowFilters(!showFilters)}
-          className={cn(
-            "h-9 border-white/20 hover:bg-white/10 hover:text-white transition-all bg-[#111111]/80 backdrop-blur-sm rounded-sm text-xs font-bold tracking-widest px-4",
-            (showFilters || activeCount > 0) && "border-[#cecece]/50 text-white"
-          )}
-        >
-          <Filter className="h-4 w-4 mr-2" />
-          FILTERS
-          {activeCount > 0 && (
-            <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-sm bg-white/20 text-[10px] text-white font-bold">
-              {activeCount}
-            </span>
-          )}
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowFilters(!showFilters)}
+            className={cn(
+              "h-9 border-white/20 hover:bg-white/10 hover:text-white transition-all bg-[#111111]/80 backdrop-blur-sm rounded-sm text-xs font-bold tracking-widest px-4",
+              (showFilters || activeCount > 0) && "border-[#cecece]/50 text-white"
+            )}
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            FILTERS
+            {activeCount > 0 && (
+              <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-sm bg-white/20 text-[10px] text-white font-bold">
+                {activeCount}
+              </span>
+            )}
+          </Button>
+
+          <label className="flex items-center gap-2 cursor-pointer group">
+            <Checkbox 
+              checked={filters.hideVaulted || false}
+              onCheckedChange={(checked) => updateFilter('hideVaulted', checked)}
+              className="border-white/20 data-[state=checked]:bg-white/20 data-[state=checked]:border-white/40 data-[state=checked]:text-white h-4 w-4 rounded-sm transition-all"
+            />
+            <span className="text-[10px] font-bold tracking-widest uppercase text-white/50 group-hover:text-white/80 transition-colors mt-0.5">Hide Vaulted</span>
+          </label>
+        </div>
 
         <div className="relative isolate group flex items-center">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/40 group-focus-within:text-white transition-colors pointer-events-none z-10" />
