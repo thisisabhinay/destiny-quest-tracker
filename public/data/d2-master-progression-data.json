@@ -4442,6 +4442,25 @@
       "content": {
         "campaigns": [
           {
+            "id": "guardianRises",
+            "name": "A Guardian Rises",
+            "vaulted": false,
+            "free": true,
+            "solo": true,
+            "estimatedTime": "1-2 hours",
+            "description": "Introductory New Light quest. Wake up in the Cosmodrome, meet Shaw Han, and obtain your first ship, sparrow, and Riskrunner exotic.",
+            "keyMoments": [
+              "Wake up in Cosmodrome",
+              "Meet Shaw Han",
+              "Acquire Riskrunner"
+            ],
+            "rewards": [
+              "Riskrunner (Exotic)",
+              "Basic Gear",
+              "Tower Access"
+            ]
+          },
+          {
             "id": "beyondlight",
             "name": "Beyond Light Campaign",
             "vaulted": false,
